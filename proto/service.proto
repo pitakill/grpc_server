@@ -1,0 +1,21 @@
+syntax = "proto3";
+package core;
+
+service Bellator {
+    rpc Generis(FeatureVector) returns (Response) {}
+    rpc GenerisPolo(FeatureVector) returns (Response) {}
+}
+
+message FeatureVector {
+    string Title = 1;
+    int64 Comments = 2;
+    int64 OpenDays = 3;
+    int64 Adds = 4;
+    int64 Dels = 5;
+    int64 Files = 6;
+    float CouplingAverage = 7;
+}
+
+message Response {
+    string Generis = 1;
+}
