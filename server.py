@@ -6,13 +6,41 @@ import service_pb2
 import service_pb2_grpc
 
 import joblib
+import pandas as pd
 
 from polos import importdata, splitdataset, train_using_entropy, prediction, cal_accuracy
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
 
 class BellatorServicer(service_pb2_grpc.BellatorServicer):
 	def Generis(self, request, context):
 		# load from context the file hardcoded by now
 		predictor = joblib.load("models/random_forest.pkl")
+		print("here we are .....")
+		# getting just one entry
+		filtered = {"adds" : request.Adds,
+				  "dels" : request.Dels,
+				  "files": request.Files,
+				  "coupling_average": request.CouplingAverage,
+				  "author": request.Author,
+				  }
+
+		filtered["total_changes"] = filtered["adds"] - filtered["dels"]
+
+		print(filtered)
+		pull = pd.DataFrame([filtered, filtered])
+		print(pull)
+		# customizations
+		cat_attribs = ["author"]
+		full_pipeline = ColumnTransformer([
+			("cat", OneHotEncoder(), cat_attribs)
+		])
+
+		print("toniiis -------")
+		print(dir(request))
+		pulls_prepared = full_pipeline.fit_transform(pull)
+		print("result ....")
+		print(predictor.predict(pulls_prepared))
 
 
 		return service_pb2.Response(Generis="test generis")
