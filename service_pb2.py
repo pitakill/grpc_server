@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='core',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rservice.proto\x12\x04\x63ore\"\x86\x01\n\rFeatureVector\x12\r\n\x05Title\x18\x01 \x01(\t\x12\x10\n\x08\x43omments\x18\x02 \x01(\x03\x12\x10\n\x08OpenDays\x18\x03 \x01(\x03\x12\x0c\n\x04\x41\x64\x64s\x18\x04 \x01(\x03\x12\x0c\n\x04\x44\x65ls\x18\x05 \x01(\x03\x12\r\n\x05\x46iles\x18\x06 \x01(\x03\x12\x17\n\x0f\x43ouplingAverage\x18\x07 \x01(\x02\"\x1b\n\x08Response\x12\x0f\n\x07Generis\x18\x01 \x01(\t2r\n\x08\x42\x65llator\x12\x30\n\x07Generis\x12\x13.core.FeatureVector\x1a\x0e.core.Response\"\x00\x12\x34\n\x0bGenerisPolo\x12\x13.core.FeatureVector\x1a\x0e.core.Response\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\rservice.proto\x12\x04\x63ore\"\xa6\x01\n\rFeatureVector\x12\r\n\x05Title\x18\x01 \x01(\t\x12\x10\n\x08\x43omments\x18\x02 \x01(\x03\x12\x10\n\x08OpenDays\x18\x03 \x01(\x03\x12\x0c\n\x04\x41\x64\x64s\x18\x04 \x01(\x03\x12\x0c\n\x04\x44\x65ls\x18\x05 \x01(\x03\x12\r\n\x05\x46iles\x18\x06 \x01(\x03\x12\x17\n\x0f\x43ouplingAverage\x18\x07 \x01(\x02\x12\x0e\n\x06\x41uthor\x18\x08 \x01(\t\x12\x0e\n\x06Number\x18\t \x01(\x03\"\x1b\n\x08Response\x12\x0f\n\x07Generis\x18\x01 \x01(\t2r\n\x08\x42\x65llator\x12\x30\n\x07Generis\x12\x13.core.FeatureVector\x1a\x0e.core.Response\"\x00\x12\x34\n\x0bGenerisPolo\x12\x13.core.FeatureVector\x1a\x0e.core.Response\"\x00\x62\x06proto3')
 )
 
 
@@ -82,6 +82,20 @@ _FEATUREVECTOR = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='Author', full_name='core.FeatureVector.Author', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='Number', full_name='core.FeatureVector.Number', index=8,
+      number=9, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -95,7 +109,7 @@ _FEATUREVECTOR = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=24,
-  serialized_end=158,
+  serialized_end=190,
 )
 
 
@@ -125,8 +139,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=160,
-  serialized_end=187,
+  serialized_start=192,
+  serialized_end=219,
 )
 
 DESCRIPTOR.message_types_by_name['FeatureVector'] = _FEATUREVECTOR
@@ -155,8 +169,8 @@ _BELLATOR = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=189,
-  serialized_end=303,
+  serialized_start=221,
+  serialized_end=335,
   methods=[
   _descriptor.MethodDescriptor(
     name='Generis',
