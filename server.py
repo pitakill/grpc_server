@@ -7,43 +7,48 @@ import service_pb2_grpc
 
 import joblib
 import pandas as pd
+import numpy as np
 
 from polos import importdata, splitdataset, train_using_entropy, prediction, cal_accuracy
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.base import BaseEstimator, TransformerMixin
+
+adds_ix, dels_ix = 3, 4
+
+class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self  # nothing else to do
+    def transform(self, X):
+        net_changes = X[:, adds_ix] - X[:, dels_ix]
+        return np.c_[X, net_changes]
 
 class BellatorServicer(service_pb2_grpc.BellatorServicer):
 	def Generis(self, request, context):
 		# load from context the file hardcoded by now
 		predictor = joblib.load("models/random_forest.pkl")
-		print("here we are .....")
-		# getting just one entry
-		filtered = {"adds" : request.Adds,
-				  "dels" : request.Dels,
-				  "files": request.Files,
-				  "coupling_average": request.CouplingAverage,
-				  "author": request.Author,
-				  }
-
+		filtered = {
+            "comments": request.Comments,
+            "open_days": request.OpenDays,
+			"author": request.Author,
+            "adds" : request.Adds,
+			"dels" : request.Dels,
+            "files": request.Files,
+            "total_changes": 0,
+			"coupling_average": request.CouplingAverage,
+            "tag": "normal",
+            "changes_size": 0
+		}
+		# some hack just because is almost 1 am
 		filtered["total_changes"] = filtered["adds"] - filtered["dels"]
-
-		print(filtered)
 		pull = pd.DataFrame([filtered, filtered])
-		print(pull)
-		# customizations
-		cat_attribs = ["author"]
-		full_pipeline = ColumnTransformer([
-			("cat", OneHotEncoder(), cat_attribs)
-		])
-
-		print("toniiis -------")
-		print(dir(request))
-		pulls_prepared = full_pipeline.fit_transform(pull)
+		pull["total_changes"]
+		pull["changes_size"] = pd.cut(pull["total_changes"], bins=[250, 500, 1000, 5000,  np.inf], labels=[1, 2, 3, 4])
+		pulls_prepared = predictor["pipeline"].transform(pull)
 		print("result ....")
-		print(predictor.predict(pulls_prepared))
+		results = predictor["model"].predict(pulls_prepared)
 
-
-		return service_pb2.Response(Generis="test generis")
+		return service_pb2.Response(Generis="%.2f." % results[0])
 
 	def GenerisPolo(self, request, context):
 		# Function importing Dataset
