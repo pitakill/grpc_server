@@ -1,6 +1,6 @@
 grpcio==1.25.0
 grpcio-tools==1.25.0
-joblib==0.14.0
+joblib==1.2.0
 numpy==1.17.4
 pandas==0.25.3
 protobuf==3.11.1
