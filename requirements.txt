@@ -1,4 +1,4 @@
-grpcio==1.25.0
+grpcio==1.53.0
 grpcio-tools==1.25.0
 joblib==0.14.0
 numpy==1.17.4
